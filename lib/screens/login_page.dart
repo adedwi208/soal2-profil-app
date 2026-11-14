@@ -16,8 +16,7 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _isLoading = false;
 
-  // Kredensial yang dianggap benar (simulasi, karena belum ada server).
-  // Ganti sesuai keinginan lu.
+
   static const String _validEmail = 'admin@gmail.com';
   static const String _validPassword = '123456';
 
@@ -28,11 +27,7 @@ class _LoginPageState extends State<LoginPage> {
     super.dispose();
   }
 
-  // Fungsi bantu untuk menampilkan notifikasi (SnackBar) di bagian bawah layar.
-  // isSuccess true = hijau, false = merah.
   void _showMessage(String message, {required bool isSuccess}) {
-    // ScaffoldMessenger mengatur SnackBar. hideCurrentSnackBar() menutup
-    // notifikasi lama supaya tidak menumpuk kalau tombol ditekan berkali-kali.
     ScaffoldMessenger.of(context)
       ..hideCurrentSnackBar()
       ..showSnackBar(
@@ -45,28 +40,20 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<void> _login() async {
-    // Validasi form dulu (kosong / format salah dicegat di sini)
     if (!_formKey.currentState!.validate()) return;
 
     setState(() => _isLoading = true);
 
-    // Simulasi proses login ke server selama 2 detik
     await Future.delayed(const Duration(seconds: 2));
 
-    // Pastikan halaman masih ada setelah menunggu
     if (!mounted) return;
 
     setState(() => _isLoading = false);
 
-    // Bandingkan input dengan kredensial yang benar.
-    // trim() membuang spasi di awal/akhir email.
     final emailBenar = _emailController.text.trim() == _validEmail;
     final passwordBenar = _passwordController.text == _validPassword;
 
     if (emailBenar && passwordBenar) {
-      // BERHASIL: tampilkan notif hijau lalu pindah halaman.
-      // SnackBar tetap terlihat di halaman berikutnya karena
-      // ScaffoldMessenger dimiliki oleh MaterialApp, bukan halaman ini.
       _showMessage('Login berhasil', isSuccess: true);
 
       Navigator.pushReplacement(
@@ -74,7 +61,6 @@ class _LoginPageState extends State<LoginPage> {
         MaterialPageRoute(builder: (context) => const ProfilePage()),
       );
     } else {
-      // GAGAL: tampilkan notif merah dan tetap di halaman login.
       _showMessage('Login gagal: email atau password salah', isSuccess: false);
     }
   }
