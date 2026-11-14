@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:soal2_profil_app/screens/login_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
 
       themeMode: ThemeMode.system,
 
-      home: MyApp(),
+      home: LoginPage(),
     );
   }
 }
