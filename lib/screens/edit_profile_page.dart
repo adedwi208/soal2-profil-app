@@ -131,11 +131,20 @@ class _EditProfilePageState extends State<EditProfilePage> {
   }
 
   void _simpan() {
-    if (_formKey.currentState!.validate()) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Data valid (belum disimpan)')),
-      );
-    }
+    if (!_formKey.currentState!.validate()) return;
+
+    final dataBaru = Profile(
+      nama: _namaController.text.trim(),
+      nim: _nimController.text.trim(),
+      prodi: _prodiController.text.trim(),
+      kelas: _kelasController.text.trim(),
+      bio: _bioController.text.trim(),
+      email: _emailController.text.trim(),
+      hp: _hpController.text.trim(),
+      github: _githubController.text.trim(),
+    );
+
+    Navigator.pop(context, dataBaru);
   }
 
   @override

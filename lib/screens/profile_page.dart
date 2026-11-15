@@ -13,15 +13,37 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   Profile _profile = const Profile(
-    nama: 'Ade Dwi Herdiansyah',
+    nama: 'Nama Lengkap Lu',
     nim: '1234567890',
     prodi: 'Teknik Informatika',
-    kelas: 'TI-SE3',
-    bio: 'Belajar Terus.',
-    email: 'adeagustus02@gmail.com',
+    kelas: 'TI-3A',
+    bio: 'Mahasiswa yang suka belajar pengembangan aplikasi web dan mobile.',
+    email: 'email@gmail.com',
     hp: '081234567890',
-    github: 'github.com/adedwi208',
+    github: 'github.com/username',
   );
+
+  Future<void> _bukaEditProfil() async {
+    final hasil = await Navigator.push<Profile>(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EditProfilePage(profile: _profile),
+      ),
+    );
+
+    if (!mounted || hasil == null) return;
+
+    setState(() {
+      _profile = hasil;
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text('Profil berhasil diperbarui'),
+        backgroundColor: Colors.green,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,14 +54,7 @@ class _ProfilePageState extends State<ProfilePage> {
           IconButton(
             icon: const Icon(Icons.edit),
             tooltip: 'Edit Profil',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => EditProfilePage(profile: _profile),
-                ),
-              );
-            },
+            onPressed: _bukaEditProfil,
           ),
         ],
       ),
