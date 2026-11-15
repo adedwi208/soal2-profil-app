@@ -49,12 +49,70 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.dispose();
   }
 
+  // ---------- FUNGSI VALIDATOR ----------
+  // Aturan validator: return null = valid, return teks = pesan error.
+
+  // Nama wajib diisi. trim() membuang spasi di awal/akhir,
+  // jadi kalau isinya spasi doang tetap dianggap kosong.
+  String? _validasiNama(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Nama wajib diisi';
+    }
+    return null;
+  }
+
+  String? _validasiEmail(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Email wajib diisi';
+    }
+
+    final email = value.trim();
+
+    final posisiAt = email.indexOf('@');
+    final posisiAtTerakhir = email.lastIndexOf('@');
+    final posisiTitik = email.lastIndexOf('.');
+
+    if (email.contains(' ')) {
+      return 'Email tidak boleh mengandung spasi';
+    }
+    if (posisiAt == -1 || posisiAt != posisiAtTerakhir) {
+      return 'Email harus mengandung satu tanda @';
+    }
+    if (posisiAt == 0) {
+      return 'Email harus ada nama sebelum @';
+    }
+    if (posisiTitik < posisiAt + 2 || posisiTitik == email.length - 1) {
+      return 'Format email tidak valid';
+    }
+    return null;
+  }
+
+  String? _validasiHp(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Nomor HP wajib diisi';
+    }
+
+    final hp = value.trim();
+
+    for (int i = 0; i < hp.length; i++) {
+      if (!'0123456789'.contains(hp[i])) {
+        return 'Nomor HP hanya boleh berisi angka';
+      }
+    }
+
+    if (hp.length < 10 || hp.length > 13) {
+      return 'Nomor HP harus 10-13 digit';
+    }
+    return null;
+  }
+
   Widget _buildField({
     required TextEditingController controller,
     required String label,
     required IconData icon,
     TextInputType? keyboardType,
     int maxLines = 1,
+    String? Function(String?)? validator,
   }) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
@@ -62,6 +120,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
         controller: controller,
         keyboardType: keyboardType,
         maxLines: maxLines,
+        validator: validator,
         decoration: InputDecoration(
           labelText: label,
           prefixIcon: Icon(icon),
@@ -69,6 +128,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
         ),
       ),
     );
+  }
+
+  void _simpan() {
+    if (_formKey.currentState!.validate()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Data valid (belum disimpan)')),
+      );
+    }
   }
 
   @override
@@ -85,6 +152,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 controller: _namaController,
                 label: 'Nama Lengkap',
                 icon: Icons.person,
+                validator: _validasiNama,
               ),
               _buildField(
                 controller: _nimController,
@@ -112,12 +180,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 label: 'Email',
                 icon: Icons.email,
                 keyboardType: TextInputType.emailAddress,
+                validator: _validasiEmail,
               ),
               _buildField(
                 controller: _hpController,
                 label: 'Nomor HP',
                 icon: Icons.phone,
                 keyboardType: TextInputType.phone,
+                validator: _validasiHp,
               ),
               _buildField(
                 controller: _githubController,
@@ -129,7 +199,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 width: double.infinity,
                 height: 48,
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: _simpan,
                   child: const Text('Simpan'),
                 ),
               ),
