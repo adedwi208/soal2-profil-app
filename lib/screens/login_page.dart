@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'profile_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -17,7 +18,7 @@ class _LoginPageState extends State<LoginPage> {
 
   bool _isLoading = false;
 
-  static const String _validEmail = 'admin@gmail.com';
+  static const String _validEmail = 'ade123@gmail.com';
   static const String _validPassword = '123456';
 
   @override
@@ -59,8 +60,7 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) =>
-              ProfilePage(onGantiTema: widget.onGantiTema),
+          builder: (context) => ProfilePage(onGantiTema: widget.onGantiTema),
         ),
       );
     } else {
