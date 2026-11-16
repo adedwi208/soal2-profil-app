@@ -18,7 +18,7 @@ Aplikasi profil mahasiswa berbasis Flutter yang dibuat untuk Ujian Tengah Semest
 
 ## Video Presentasi
 
-Link YouTube: *(isi setelah video diunggah)*
+Link YouTube: (https://youtu.be/EWE4QS9HbV0)
 
 ---
 
