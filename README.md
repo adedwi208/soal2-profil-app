@@ -72,3 +72,8 @@ flutter run
 ### 5. Tema dan Identitas Aplikasi
 - `theme` dan `darkTheme` dengan warna sendiri (`ColorScheme.fromSeed`). Perubahan `themeMode` dilakukan langsung lewat `setState()` di `MyApp` tanpa perlu restart aplikasi.
 - Nama aplikasi di perangkat Android diubah menjadi **Profil Ade** melalui atribut `android:label` pada `AndroidManifest.xml`.
+---
+
+## Download Aplikasi
+
+[Unduh APK (v1.0.0)](https://github.com/USERNAME/NAMA-REPO/releases/latest)
