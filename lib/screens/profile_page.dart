@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../models/profile.dart';
 import '../widgets/info_tile.dart';
+import 'about_page.dart';
 import 'edit_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -13,14 +14,14 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   Profile _profile = const Profile(
-    nama: 'Nama Lengkap Lu',
-    nim: '1234567890',
+    nama: 'Ade Dwi Herdiansyah',
+    nim: '1124160201',
     prodi: 'Teknik Informatika',
-    kelas: 'TI-3A',
+    kelas: 'TI-SE3',
     bio: 'Mahasiswa yang suka belajar pengembangan aplikasi web dan mobile.',
-    email: 'email@gmail.com',
+    email: 'adeagustus02@gmail.com',
     hp: '081234567890',
-    github: 'github.com/username',
+    github: 'github.com/adedwi208',
   );
 
   Future<void> _bukaEditProfil() async {
@@ -48,16 +49,65 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Profil'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            tooltip: 'Edit Profil',
-            onPressed: _bukaEditProfil,
-          ),
-        ],
+      appBar: AppBar(title: const Text('Profil')),
+
+      drawer: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              decoration: BoxDecoration(
+                color: Theme.of(context).colorScheme.primary,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Text(
+                    _profile.nama,
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                  Text(
+                    _profile.nim,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onPrimary,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.person),
+              title: const Text('Profil'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+
+            ListTile(
+              leading: const Icon(Icons.info),
+              title: const Text('Tentang Saya'),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AboutPage()),
+                );
+              },
+            ),
+          ],
+        ),
       ),
+
+      floatingActionButton: FloatingActionButton(
+        onPressed: _bukaEditProfil,
+        tooltip: 'Edit Profil',
+        child: const Icon(Icons.edit),
+      ),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(24),
         child: Column(
