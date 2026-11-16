@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-
 import 'profile_page.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  final void Function(bool) onGantiTema;
+
+  const LoginPage({super.key, required this.onGantiTema});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -15,7 +16,6 @@ class _LoginPageState extends State<LoginPage> {
   final _passwordController = TextEditingController();
 
   bool _isLoading = false;
-
 
   static const String _validEmail = 'admin@gmail.com';
   static const String _validPassword = '123456';
@@ -58,7 +58,10 @@ class _LoginPageState extends State<LoginPage> {
 
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const ProfilePage()),
+        MaterialPageRoute(
+          builder: (context) =>
+              ProfilePage(onGantiTema: widget.onGantiTema),
+        ),
       );
     } else {
       _showMessage('Login gagal: email atau password salah', isSuccess: false);

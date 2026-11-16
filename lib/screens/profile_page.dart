@@ -6,7 +6,10 @@ import 'about_page.dart';
 import 'edit_profile_page.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  // Fungsi pengganti tema, diterima dari LoginPage.
+  final void Function(bool) onGantiTema;
+
+  const ProfilePage({super.key, required this.onGantiTema});
 
   @override
   State<ProfilePage> createState() => _ProfilePageState();
@@ -78,7 +81,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
             ),
-
             ListTile(
               leading: const Icon(Icons.person),
               title: const Text('Profil'),
@@ -86,7 +88,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 Navigator.pop(context);
               },
             ),
-
             ListTile(
               leading: const Icon(Icons.info),
               title: const Text('Tentang Saya'),
@@ -97,6 +98,15 @@ class _ProfilePageState extends State<ProfilePage> {
                   MaterialPageRoute(builder: (context) => const AboutPage()),
                 );
               },
+            ),
+
+            const Divider(),
+
+            SwitchListTile(
+              secondary: const Icon(Icons.dark_mode),
+              title: const Text('Mode Gelap'),
+              value: Theme.of(context).brightness == Brightness.dark,
+              onChanged: widget.onGantiTema,
             ),
           ],
         ),
